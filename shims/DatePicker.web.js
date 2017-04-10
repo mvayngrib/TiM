@@ -21,7 +21,9 @@ export default class DatePickerAdapter extends Component {
     const { onDateChange } = this.props
     Actions.showModal({
       contents: createCalendarModal({
-        selectedDate: this.props.date,
+        minDate: this.props.minDate,
+        maxDate: this.props.maxDate,
+        selectedDate: this.props.date || Date.now(),
         onConfirm: function (date) {
           Actions.hideModal()
           onDateChange(new Date(date))
@@ -34,7 +36,7 @@ export default class DatePickerAdapter extends Component {
   }
   render() {
     const { date, customStyles } = this.props
-    const dateString = date ? dateformat(date, 'UTC:mmm dS, yyyy') : this.props.placeholder
+    const dateString = date ? dateformat(date, 'mmm dS, yyyy') : this.props.placeholder
     const textStyle = customStyles && customStyles.placeholderText
     return (
       <TouchableHighlight underlayColor="transparent" style={this.props.style} onPress={() => this.onPress()}>
